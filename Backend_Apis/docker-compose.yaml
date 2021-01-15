@@ -1,0 +1,14 @@
+version: "3"
+services:
+  flask-platform:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: flask-platform:dev-latest
+
+    ports:
+      - 5000:5000
+networks:
+  default:
+    external:
+      name: dev_net
