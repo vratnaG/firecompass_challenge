@@ -1,0 +1,11 @@
+version: "3"
+services:
+  coda-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: coda-ui:latest
+    environment:
+      - BUILD_ENV=dev
+    ports:
+      - 3003:3000

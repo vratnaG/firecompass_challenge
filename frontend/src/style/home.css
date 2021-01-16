@@ -1,0 +1,23 @@
+.title {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 5px 0px 10px 0px;
+}
+
+.lobby-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 3px 4px 3px 4px;
+  background-color: rgb(217, 248, 217);
+}
+
+.lobby-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 3px 4px 3px 4px;
+  cursor: pointer;
+  background-color: rgb(250, 232, 200);
+}

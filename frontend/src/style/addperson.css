@@ -1,0 +1,27 @@
+.close {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0px 0px 10px 0px;
+  cursor: pointer;
+}
+.add-button {
+  display: flex;
+  justify-content: center;
+}
+
+.person-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 3px 4px 3px 4px;
+  background-color: rgb(207, 207, 240);
+}
+
+.person-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 3px 4px 3px 4px;
+  cursor: pointer;
+  background-color: aliceblue;
+}
