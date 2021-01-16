@@ -41,7 +41,7 @@ if 'persons' not in all_data(mycursor):
 mycursor.execute("SHOW TABLES")
 if 'lobbys' not in all_data(mycursor):
     mycursor.execute(
-        "CREATE TABLE lobbys (lobby_id INT AUTO_INCREMENT PRIMARY KEY, lobby_name VARCHAR(255), lobby_fee INT)")
+        "CREATE TABLE lobbys (lobby_id INT AUTO_INCREMENT PRIMARY KEY, lobby_name VARCHAR(255), lobby_fee INT, capcity INT)")
 mycursor.execute("SHOW TABLES")
 if 'winers' not in all_data(mycursor):
     mycursor.execute("CREATE TABLE winers (win_id INT AUTO_INCREMENT PRIMARY KEY, lobby_id INT,FOREIGN KEY (lobby_id) REFERENCES lobbys(lobby_id), person_id INT, FOREIGN KEY (person_id) REFERENCES persons(person_id), house DOUBLE)")
@@ -65,6 +65,7 @@ def lobbys_info(lobbys) -> dict:
             "id": x[0],
             "Name": x[1],
             "Entry_Fee": x[2],
+            "Capcity": x[3],
         })
     return d
 
@@ -84,6 +85,7 @@ def lobby(lobby) -> dict:
             "id": x[0],
             "Name": x[1],
             "Entry_Fee": x[2],
+            "Capcity": x[3],
         }
 
 
@@ -92,8 +94,8 @@ def winners(winner) -> dict:
     for x in winner:
         d.append({
             "id": x[0],
-            "Lobby_Name": retrieve_lobby(x[2])["Name"],
-            "Person_Name": retrieve_person(x[1])["Name"],
+            "Lobby_Name": retrieve_lobby(x[1])["Name"],
+            "Person_Name": retrieve_person(x[2])["Name"],
             "House": x[3],
         })
     return d
@@ -126,8 +128,8 @@ def retrieve_person(id: str) -> dict:
 
 
 def add_lobby(lobby_data: dict) -> dict:
-    sql = "INSERT INTO lobbys (lobby_name, lobby_fee) VALUES (%s,%s)"
-    val = (lobby_data["Name"], lobby_data["Entry_Fee"])
+    sql = "INSERT INTO lobbys (lobby_name, lobby_fee,capcity) VALUES (%s,%s,%s)"
+    val = (lobby_data["Name"], lobby_data["Entry_Fee"], lobby_data["Capcity"])
     print(val)
     mycursor.execute(sql, val)
     mydb.commit()
@@ -150,9 +152,12 @@ def retrieve_lobby(id: str) -> dict:
 
 
 def add_winner(winner_data: dict) -> dict:
-    fee = retrieve_lobby(winner_data["Lobby_id"])["Entry_Fee"]
-    house = fee*winner_data["Person_limit"]*0.05
-    win = fee*winner_data["Person_limit"] * 0.95
+    lobby = retrieve_lobby(winner_data["Lobby_id"])
+    fee = lobby["Entry_Fee"]
+    person_limit = lobby["Capcity"]
+    house = fee*person_limit*0.05
+    win = float(retrieve_person(
+        winner_data["Winner_id"])["Amount"]) + fee*person_limit * 0.95
     sql = "UPDATE persons SET amount=%s WHERE person_id = %s"
     val = (win, winner_data["Winner_id"])
     mycursor.execute(sql, val)

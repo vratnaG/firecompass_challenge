@@ -19,12 +19,14 @@ class PersonSchema(BaseModel):
 class LobbySchema(BaseModel):
     Name: str = Field(...)
     Entry_Fee: int
+    Capcity: int
 
     class Config:
         schema_extra = {
             "example": {
                 "Name": "lobby1",
                 "Entry_Fee": "300",
+                "Capcity": "6",
             }
         }
 
@@ -32,14 +34,12 @@ class LobbySchema(BaseModel):
 class WinnersSchema(BaseModel):
     Lobby_id: int
     Winner_id: int
-    Person_limit: int
 
     class Config:
         schema_extra = {
             "example": {
                 "Lobby_id": "1",
                 "Winner_id": "2",
-                "Person_limit": "5",
             }
         }
 
