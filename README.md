@@ -13,3 +13,4 @@ run docker-compose -f docker-compose.yaml up --build -d
 
 then got Frontend directory
 run docker-compose -f docker-compose.yaml up --build -d
+open in browser http://localhost:3000
